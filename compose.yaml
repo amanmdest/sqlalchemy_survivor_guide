@@ -1,0 +1,21 @@
+services:
+  sqlmyalchemy:
+    # container_name: sqlmyalchemy
+    image: mysql
+    # restart: unless-stopped
+    # env_file:
+    #   - .env
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: passtest
+      # MYSQL_USER: test
+      # MYSQL_PASSWORD: pass
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql-data:
+
+# docker-compose exec mysql mysql -u codechella_user -p pa55word
+# docker inspect 9f35d2e39476 | grep -i ipaddress
