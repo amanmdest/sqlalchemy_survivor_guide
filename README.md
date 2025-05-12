@@ -1,3 +1,3 @@
-<h1 align='center'>Manual de Sobrêvivencia do SQLAlchemy</h1>
+<h2 align='center'>Manual de Sobrêvivencia do SQLAlchemy</h2>
 
-<p align='center'>Explorando biblioteca SQLAlchemy.</p>
+<p>Explorando biblioteca SQLAlchemy.</p>
