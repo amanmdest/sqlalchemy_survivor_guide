@@ -24,7 +24,7 @@ class Filmes(Base):
 # SQL    
 
 # Insert
-# data_insert = Filmes(titulo="Aquarius", genero="Drama", ano=2015) # objeto da classe
+# data_insert = Filmes(titulo="The Little Hours", genero="Comêdia", ano=2017) # objeto da classe
 # session.add(data_insert)
 # session.commit()
 
@@ -33,15 +33,19 @@ class Filmes(Base):
 # session.commit()
 
 # Update
-# data = session.query(Filmes).filter(Filmes.genero=="Mindfuck").update({ "genero": "Horror" })
-# session.commit()
+data = session.query(Filmes).filter(Filmes.genero=="Comêdia").update({ "genero": "Comedia" })
+# data = session.query(Filmes).filter(Filmes.genero=="Drama").update({ "ano": "2016" })
+session.commit()
 
 # Select
 data = session.query(Filmes).all()
-print(data)
+print(data) 
 print(data[0].titulo) # Aquarius
 print(data[1].genero) # Horror
 
 
 session.close()
 
+
+# The Godfather - Policial
+# Filme de 1972
