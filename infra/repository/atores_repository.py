@@ -10,8 +10,24 @@ class AtoresRepository:
                 .join(Filmes, Atores.titulo_filme == Filmes.titulo)\
                 .with_entities(
                     Atores.nome,
-                    Filmes.titulo,
-                    Filmes.genero
+                    # Filmes.genero,
+                    Filmes.titulo
                 )\
                 .all()
             return data
+    
+    def insert(self, nome, titulo_filme):
+        with DBConnectionHandler as db:
+            try:
+                data = Atores(nome=nome, titulo_filme=titulo_filme)
+                db.session.add(data)
+                db.session.commit()
+            except Exception as exception:
+                db.session.rollback()
+                raise exception
+
+            return data
+        
+    def update(self): ...
+
+    def delete(self): ...

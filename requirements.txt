@@ -1,0 +1,11 @@
+greenlet==3.1.1
+ignr==2.2
+iniconfig==2.1.0
+mock-alchemy==0.2.6
+packaging==25.0
+pluggy==1.6.0
+Pygments==2.19.1
+PyMySQL==1.1.1
+pytest==8.4.0
+SQLAlchemy==2.0.40
+typing_extensions==4.13.1

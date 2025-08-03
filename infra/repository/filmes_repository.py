@@ -1,14 +1,23 @@
-from infra.configs.connection import DBConnectionHandler
 from infra.entities.filmes import Filmes
 from sqlalchemy.orm.exc import NoResultFound
+
+
 class FilmesRepository:
+    def __init__(self, ConnectionHandler) -> None:
+        self.__ConnectionHandler = ConnectionHandler
+
     def select(self):
-        with DBConnectionHandler() as db:
-            data = db.session.query(Filmes).all()
-            return data
+        with self.__ConnectionHandler() as db:
+            try:
+                data = db.session.query(Filmes).all()
+                return data
+            except Exception as exception:
+                db.session.rollback()
+                raise exception
+
         
-    def select_drama_movie(self):
-        with DBConnectionHandler() as db:
+    def select_drama_filme(self):
+        with self.__ConnectionHandler() as db:
             try:
                 data = db.session.query(Filmes).filter(Filmes.genero == 'Drama').one()
                 return data
@@ -17,24 +26,37 @@ class FilmesRepository:
             except Exception as exception:
                 db.session.rollback()
                 raise exception
-        
+
+
     def insert(self, titulo, genero, ano):
-        with DBConnectionHandler() as db:
+        with self.__ConnectionHandler() as db:
             try:
                 data_insert = Filmes(titulo=titulo, genero=genero, ano=ano)
                 db.session.add(data_insert)
+                db.session.commit()
+                return data_insert
+            except Exception as exception:
+                db.session.rollback()
+                raise exception
+
+
+    def update_genero(self, titulo, genero):
+        with self.__ConnectionHandler() as db:
+            try:
+                # db.session.query(Filmes).filter(Filmes.titulo == titulo).update({"ano": ano})
+                db.session.query(Filmes).filter(Filmes.titulo == titulo).update({"genero": genero})
+                db.session.commit()
+            except Exception as exception:
+                db.session.rollback()
+                raise exception
+
+
+    def delete(self, titulo):
+        with self.__ConnectionHandler() as db:
+            try:
+                db.session.query(Filmes).filter(Filmes.titulo == titulo).delete()
                 db.session.commit()
             except Exception as exception:
                 db.session.rollback()
                 raise exception
             
-    def update_gender(self, titulo, genero):
-        with DBConnectionHandler() as db:
-            # db.session.query(Filmes).filter(Filmes.titulo == titulo).update({"ano": ano})
-            db.session.query(Filmes).filter(Filmes.titulo == titulo).update({"genero": genero})
-            db.session.commit()
-
-    def delete(self, titulo):
-        with DBConnectionHandler() as db:
-            db.session.query(Filmes).filter(Filmes.titulo == titulo).delete()
-            db.session.commit()
